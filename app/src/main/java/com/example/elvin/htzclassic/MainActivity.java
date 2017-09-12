@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private List<Fragment> mlist;
     private Boolean isPlaying = false;
 
-    private SearchView searchView;
-
     private RollPagerView mRollPagerView;
 
     @Override
@@ -130,11 +128,26 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_view,menu);
 
-//        MenuItem item =  menu.findItem(R.id.searchview);
+        final MenuItem item =  menu.findItem(R.id.searchview);
 //        SearchView searchview = (SearchView) item.getActionView();
-//        searchView.setIconifiedByDefault(true);
-//        searchView.setQueryHint("搜索");
-//        searchView.setSubmitButtonEnabled(true);
+        SearchView searchview = new SearchView(MainActivity.this);
+        searchview.setIconifiedByDefault(true);
+        searchview.setQueryHint("搜索");
+        searchview.setSubmitButtonEnabled(true);
+        item.setActionView(searchview);
+
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(MainActivity.this,query,Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         return  true;
     }
