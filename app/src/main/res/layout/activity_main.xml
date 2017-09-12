@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    tools:context="com.example.elvin.htzclassic.MainActivity">
+
+   <android.support.v7.widget.Toolbar
+       android:id="@+id/toolbar"
+       android:layout_width="match_parent"
+       android:layout_height="?attr/actionBarSize"
+       android:background="@color/bk">
+   </android.support.v7.widget.Toolbar>
+
+   <com.jude.rollviewpager.RollPagerView
+       android:id="@+id/rollpagerview"
+       android:layout_width="match_parent"
+       android:layout_height="120dp"
+       android:layout_below="@+id/toolbar"
+       app:rollviewpager_play_delay="5000"/>
+
+   <android.support.v4.view.ViewPager
+       android:id="@+id/viewpager"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_above="@+id/jptabbar"
+       android:layout_below="@+id/rollpagerview">
+   </android.support.v4.view.ViewPager>
+
+   <com.jpeng.jptabbar.JPTabBar
+       android:id="@+id/jptabbar"
+       android:layout_width="match_parent"
+       android:layout_height="52dp"
+       android:layout_alignParentBottom="true"
+       android:background="@color/bk"
+       app:TabMiddleView="@layout/middle_button"
+       app:TabMiddleHMargin="30dp"
+       app:TabMiddleBottomDis="10dp"
+       app:TabTextSize="11sp"
+       app:TabNormalColor="#8a8a8a"
+       app:TabSelectColor="@android:color/holo_red_light">
+
+   </com.jpeng.jptabbar.JPTabBar>
+
+</RelativeLayout>
