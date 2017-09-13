@@ -10,8 +10,9 @@
    <android.support.v7.widget.Toolbar
        android:id="@+id/toolbar"
        android:layout_width="match_parent"
-       android:layout_height="?attr/actionBarSize"
+       android:layout_height="50dp"
        android:background="@color/bk">
+        <include layout="@layout/search_bar"/>
    </android.support.v7.widget.Toolbar>
 
    <com.jude.rollviewpager.RollPagerView
@@ -32,16 +33,17 @@
    <com.jpeng.jptabbar.JPTabBar
        android:id="@+id/jptabbar"
        android:layout_width="match_parent"
-       android:layout_height="52dp"
+       android:layout_height="48dp"
        android:layout_alignParentBottom="true"
        android:background="@color/bk"
        app:TabMiddleView="@layout/middle_button"
        app:TabMiddleHMargin="30dp"
-       app:TabMiddleBottomDis="10dp"
-       app:TabTextSize="11sp"
+       app:TabMiddleBottomDis="7dp"
+       app:TabMargin="4dp"
+       app:TabIconSize="30dp"
+       app:TabTextSize="9sp"
        app:TabNormalColor="#8a8a8a"
        app:TabSelectColor="@android:color/holo_red_light">
-
    </com.jpeng.jptabbar.JPTabBar>
 
 </RelativeLayout>

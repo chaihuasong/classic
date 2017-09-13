@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -130,36 +131,46 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_view,menu);
-        setSearchView(menu);
-
-        return  true;
+    public void onSearch(View view){
+        Intent intent = new Intent(this,SearchActivity.class);
+        startActivity(intent);
     }
 
-    private  void setSearchView(Menu menu){
-        MenuItem item =  menu.findItem(R.id.searchview);
-        mSearchView = new SearchView(MainActivity.this);
-        mSearchView.setIconifiedByDefault(false);
-        mSearchView.setQueryHint("搜索");
-        mSearchView.setSubmitButtonEnabled(true);
-
-        TextView textView = (TextView)mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        textView.setTextColor(Color.GRAY);
-        item.setActionView(mSearchView);
-
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this,query,Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+    public void onHistory(View view){
+        Intent intent = new Intent(this,HistoryActivity.class);
+        startActivity(intent);
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.search_view,menu);
+//        setSearchView(menu);
+//
+//        return  true;
+//    }
+//
+//    private  void setSearchView(Menu menu){
+//        MenuItem item =  menu.findItem(R.id.searchview);
+//        mSearchView = new SearchView(MainActivity.this);
+//        mSearchView.setIconifiedByDefault(false);
+//        mSearchView.setQueryHint("搜索");
+//        mSearchView.setSubmitButtonEnabled(true);
+//
+//        TextView textView = (TextView)mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+//        textView.setTextColor(Color.GRAY);
+//        item.setActionView(mSearchView);
+//
+//        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                Toast.makeText(MainActivity.this,query,Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
+//    }
 }
