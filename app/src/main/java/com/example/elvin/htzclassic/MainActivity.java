@@ -1,5 +1,9 @@
 package com.example.elvin.htzclassic;
 
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.ComponentName;
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -15,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jpeng.jptabbar.JPTabBar;
@@ -49,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private Boolean isPlaying = false;
 
     private RollPagerView mRollPagerView;
+    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,16 +133,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_view,menu);
+        setSearchView(menu);
 
-        final MenuItem item =  menu.findItem(R.id.searchview);
-//        SearchView searchview = (SearchView) item.getActionView();
-        SearchView searchview = new SearchView(MainActivity.this);
-        searchview.setIconifiedByDefault(true);
-        searchview.setQueryHint("搜索");
-        searchview.setSubmitButtonEnabled(true);
-        item.setActionView(searchview);
+        return  true;
+    }
 
-        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+    private  void setSearchView(Menu menu){
+        MenuItem item =  menu.findItem(R.id.searchview);
+        mSearchView = new SearchView(MainActivity.this);
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.setQueryHint("搜索");
+        mSearchView.setSubmitButtonEnabled(true);
+
+        TextView textView = (TextView)mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        textView.setTextColor(Color.GRAY);
+        item.setActionView(mSearchView);
+
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Toast.makeText(MainActivity.this,query,Toast.LENGTH_SHORT).show();
@@ -148,7 +161,5 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        return  true;
     }
 }
