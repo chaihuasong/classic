@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:maxHeight="150dp"
+    android:background="#EEEEEE">
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/avatar"
+        app:siBorderWidth="3dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="30dp"
+        app:siBorderColor="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="20dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="15sp"
+            android:text="杜满想"/>
+    </LinearLayout>
+
+</LinearLayout>

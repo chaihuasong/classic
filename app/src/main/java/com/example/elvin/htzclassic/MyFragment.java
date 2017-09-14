@@ -3,11 +3,19 @@ package com.example.elvin.htzclassic;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -30,7 +38,8 @@ public class MyFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private ListView mListView;
-
+    private AppCompatActivity mAppCompatActivity;
+    private List<Info> mInfoList;
 
     public MyFragment() {
         // Required empty public constructor
@@ -64,17 +73,118 @@ public class MyFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mAppCompatActivity = (AppCompatActivity)getActivity();
+        initInfos();
+
+        mListView = (ListView)mAppCompatActivity.findViewById(R.id.my_listivew);
+        View listViewHeader = mAppCompatActivity.getLayoutInflater().inflate(R.layout.my_listview_header,mListView,false);
+        mListView.addHeaderView(listViewHeader);
+        mListView.setAdapter(new ListViewAdapter(mInfoList));
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    private void initInfos(){
+        mInfoList = new ArrayList<Info>();
+        Info infoFavorite  = new Info();
+        infoFavorite.setEnter(R.drawable.enter);
+        infoFavorite.setIcon(R.drawable.favorite);
+        infoFavorite.setTitle("我的收藏");
+        mInfoList.add(infoFavorite);
+
+        Info infoHistory  = new Info();
+        infoHistory.setEnter(R.drawable.enter);
+        infoHistory.setIcon(R.drawable.history);
+        infoHistory.setTitle("播放历史");
+        mInfoList.add(infoHistory);
+    }
+
+    public class ListViewAdapter extends BaseAdapter{
+        private List<View> mList;
+
+        public  ListViewAdapter(List<Info> list){
+            mList = new ArrayList<View>();
+            for(int i = 0;i< list.size();i++){
+                Info info = list.get(i);
+                View view = makeView(info.icon,info.title,info.enter);
+                mList.add(view);
+            }
         }
+
+        @Override
+        public int getCount() {
+            return mList.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return mList.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            if (null == view){
+                return mList.get(i);
+            }
+
+            return view;
+        }
+
+        private View makeView(int icon,String title,int enter){
+            View view = mAppCompatActivity.getLayoutInflater().inflate(R.layout.my_listview_item,null);
+            ImageView imageView = (ImageView)view.findViewById(R.id.listview_item_icon);
+            imageView.setImageResource(icon);
+
+            TextView textView = (TextView)view.findViewById(R.id.listview_item_title);
+            textView.setText(title);
+            ImageView imageView2 = (ImageView)view.findViewById(R.id.listview_item_enter);
+            imageView2.setImageResource(enter);
+
+            return  view;
+        }
+    }
+
+    public class  Info{
+        private int icon;
+
+        public int getIcon() {
+            return icon;
+        }
+
+        public void setIcon(int icon) {
+            this.icon = icon;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public int getEnter() {
+            return enter;
+        }
+
+        public void setEnter(int enter) {
+            this.enter = enter;
+        }
+
+        private String title;
+        private int enter;
     }
 
     @Override
@@ -107,5 +217,12 @@ public class MyFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
     }
 }
