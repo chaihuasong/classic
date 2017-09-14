@@ -6,10 +6,32 @@
     android:layout_height="match_parent"
     tools:context="com.example.elvin.htzclassic.HistoryActivity">
 
-    <TextView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/history_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="History Page"
-        android:gravity="center"/>
+        android:layout_height="@dimen/toolbar_heigh_50"
+        android:background="@color/bk">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="播放历史"
+                android:gravity="center"
+                android:textSize="20sp"/>
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/delete"
+                android:onClick="onDeleteAllHistory"/>
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
 
 </LinearLayout>

@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.elvin.htzclassic.SearchActivity">
 
-    <TextView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/search_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Search Page"
-        android:gravity="center"/>
+        android:layout_height="@dimen/toolbar_heigh_50"
+        android:background="@color/bk">
+    </android.support.v7.widget.Toolbar>
+
 </LinearLayout>
