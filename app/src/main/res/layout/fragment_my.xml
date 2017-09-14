@@ -5,10 +5,9 @@
     android:orientation="vertical"
     tools:context="com.example.elvin.htzclassic.MyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
+        android:id="@+id/my_listivew"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="my" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

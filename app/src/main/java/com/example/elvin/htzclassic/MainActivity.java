@@ -54,16 +54,10 @@ public class MainActivity extends AppCompatActivity {
     private List<Fragment> mlist;
     private Boolean isPlaying = false;
 
-    private RollPagerView mRollPagerView;
-    private SearchView mSearchView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         //JPTabbar
         mlist = new  ArrayList<Fragment>();
@@ -95,49 +89,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //轮番转动的推荐Banner
-        mRollPagerView = (RollPagerView)findViewById(R.id.rollpagerview);
-        mRollPagerView.setAnimationDurtion(500);
-        mRollPagerView.setAdapter(new rollPagerViewAdapter());
-        mRollPagerView.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
-
-        mRollPagerView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Toast.makeText(MainActivity.this,"你点击了"+position+"张Banner",Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private  class rollPagerViewAdapter extends StaticPagerAdapter{
-        private int[] imgs = new int[]{
-                R.drawable.banner_zhu_zi_wan_nian_ding_lun,
-                R.drawable.banner_dian_zi_bao,
-        };
-
-        @Override
-        public View getView(ViewGroup container, int position) {
-            ImageView view = new ImageView(container.getContext());
-            view.setImageResource(imgs[position]);
-            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            return view;
-        }
-
-        @Override
-        public int getCount() {
-            return imgs.length;
-        }
-    }
-
-    public void onSearch(View view){
-        Intent intent = new Intent(this,SearchActivity.class);
-        startActivity(intent);
-    }
-
-    public void onHistory(View view){
-        Intent intent = new Intent(this,HistoryActivity.class);
-        startActivity(intent);
     }
 }

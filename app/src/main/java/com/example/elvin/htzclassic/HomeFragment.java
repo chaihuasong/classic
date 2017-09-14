@@ -1,15 +1,29 @@
 package com.example.elvin.htzclassic;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.jude.rollviewpager.OnItemClickListener;
+import com.jude.rollviewpager.RollPagerView;
+import com.jude.rollviewpager.adapter.StaticPagerAdapter;
+import com.jude.rollviewpager.hintview.ColorPointHintView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +55,11 @@ public class HomeFragment extends Fragment {
     private List<GridViewAdapter.Data> gridData;
     private GridViewAdapter gridViewAdapter;
 
+    private AppCompatActivity mAppCompatActivity;
+    private RollPagerView mRollPagerView;
+    private LinearLayout mSearchBarLayout;
+    private ImageButton mHistoryBtn;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -61,6 +80,48 @@ public class HomeFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mAppCompatActivity = (AppCompatActivity)getActivity();
+        Toolbar toolbar = (Toolbar)mAppCompatActivity.findViewById(R.id.toolbar);
+        mAppCompatActivity.setSupportActionBar(toolbar);
+
+
+        //轮番转动的推荐Banner
+        mRollPagerView = (RollPagerView)mAppCompatActivity.findViewById(R.id.rollpagerview);
+        mRollPagerView.setAnimationDurtion(500);
+        mRollPagerView.setAdapter(new rollPagerViewAdapter());
+        mRollPagerView.setHintView(new ColorPointHintView(mAppCompatActivity, Color.YELLOW,Color.WHITE));
+
+        mRollPagerView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(mAppCompatActivity,"你点击了"+position+"张Banner",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mSearchBarLayout = (LinearLayout)mAppCompatActivity.findViewById(R.id.search_bar_layout);
+        mSearchBarLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mAppCompatActivity,SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mHistoryBtn = (ImageButton)mAppCompatActivity.findViewById(R.id.history_btn);
+        mHistoryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mAppCompatActivity,HistoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -151,5 +212,26 @@ public class HomeFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private  class rollPagerViewAdapter extends StaticPagerAdapter {
+        private int[] imgs = new int[]{
+                R.drawable.banner_zhu_zi_wan_nian_ding_lun,
+                R.drawable.banner_dian_zi_bao,
+        };
+
+        @Override
+        public View getView(ViewGroup container, int position) {
+            ImageView view = new ImageView(container.getContext());
+            view.setImageResource(imgs[position]);
+            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            return view;
+        }
+
+        @Override
+        public int getCount() {
+            return imgs.length;
+        }
     }
 }

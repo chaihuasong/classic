@@ -5,12 +5,12 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/search_bar_layout"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="30dp"
         android:background="@drawable/search_bar_background"
         android:layout_gravity="center_vertical"
-        android:onClick="onSearch"
         >
         <ImageView
             android:layout_width="16dp"
@@ -29,12 +29,12 @@
     </LinearLayout>
 
     <ImageButton
+        android:id="@+id/history_btn"
         android:layout_width="23dp"
         android:layout_height="23dp"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="18dp"
         android:layout_marginRight="23dp"
-        android:background="@drawable/history"
-        android:onClick="onHistory"/>
+        android:background="@drawable/history"/>
 
 </LinearLayout>
