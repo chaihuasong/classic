@@ -15,10 +15,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".HistoryActivity"
-            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".SearchActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".HistoryActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".AlbumActivity"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

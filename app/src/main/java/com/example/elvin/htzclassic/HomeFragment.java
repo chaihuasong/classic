@@ -169,7 +169,8 @@ public class HomeFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(view.getContext(),"你点击了 "+i+" 项",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(),AlbumActivity.class);
+                startActivity(intent);
             }
         });
         return  view;
