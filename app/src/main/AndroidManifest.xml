@@ -21,8 +21,10 @@
         <activity
             android:name=".HistoryActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".AlbumActivity"
+        <activity
+            android:name=".AlbumActivity"
             android:parentActivityName=".MainActivity" />
+        <activity android:name=".ListeningActivity"></activity>
     </application>
 
 </manifest>

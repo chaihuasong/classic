@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.elvin.htzclassic.ListeningActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/listening_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_heigh_50"
+        android:background="@color/bk">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/listening_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="001.阳明心学的缘起"
+                android:gravity="center"
+                android:textSize="17sp"/>
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/listening_irc"
+        android:padding="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        android:text="@string/listening_irc"
+        android:layout_below="@+id/listening_toolbar"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/bk"
+        android:gravity="center">
+        <ImageButton
+            android:id="@+id/listening_pre"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/pre"
+            android:layout_margin="20dp"/>
+
+        <ImageButton
+            android:id="@+id/listening_play"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/play"/>
+        <ImageButton
+            android:id="@+id/listening_next"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/next"
+            android:layout_margin="20dp"/>
+    </LinearLayout>
+
+</RelativeLayout>
