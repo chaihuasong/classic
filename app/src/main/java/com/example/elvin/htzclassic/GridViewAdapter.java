@@ -67,6 +67,15 @@ public class GridViewAdapter extends BaseAdapter {
     public static class Data{
         private   int imageID;
         private  String title;
+        private  String desc;
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
 
         public void setImageID(int imageID) {
             this.imageID = imageID;
@@ -88,9 +97,10 @@ public class GridViewAdapter extends BaseAdapter {
 
         }
         
-        public  Data(int imageID,String title){
+        public  Data(int imageID,String title,String desc){
             this.imageID = imageID;
             this.title = title;
+            this.desc  = desc;
         }
     }
 }

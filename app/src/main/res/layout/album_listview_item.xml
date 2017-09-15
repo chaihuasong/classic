@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp">
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/album_listview_item_icon"
+            android:src="@drawable/chuan_xi_lu"
+            android:layout_gravity="center_vertical"
+            app:siBorderWidth="1dp"
+            app:siBorderColor="@android:color/darker_gray"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:id="@+id/album_listview_item_title"
+            android:textSize="15sp"
+            android:text="1.修行原理－大学"
+            android:layout_marginTop="6dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="20dp">
+            <ImageView
+                android:id="@+id/album_listview_item_play_count_icon"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/play_count"/>
+            <TextView
+                android:id="@+id/album_listview_item_play_count"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="5501"
+                android:textSize="8sp"
+                android:layout_marginLeft="1dp"/>
+
+            <ImageView
+                android:id="@+id/album_listview_item_time_icon"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/time"/>
+            <TextView
+                android:id="@+id/album_listview_item_time"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="21:47"
+                android:textSize="8sp"
+                android:layout_marginLeft="3dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="60dp"
+        android:layout_height="60dp">
+        <ImageButton
+            android:layout_gravity="center"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/item_play"/>
+    </LinearLayout>
+
+</LinearLayout>

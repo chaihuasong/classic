@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="专辑"
+            android:text="专辑详情"
             android:gravity="center"
             android:textSize="20sp"/>
         </android.support.v7.widget.Toolbar>
@@ -26,13 +26,19 @@
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:layout_margin="10dp">
-        <ImageView
+        <com.github.siyamed.shapeimageview.RoundedImageView
+            android:id="@+id/album_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="8dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/chuan_xi_lu"/>
+            android:src="@drawable/chuan_xi_lu"
+            app:siRadius="4dp"
+            app:siBorderWidth="0dp"
+            app:siBorderColor="@android:color/darker_gray"
+            app:siSquare="true"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -51,7 +57,10 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/chuanxilu"/>
+                android:text="@string/chuanxilu"
+                android:ellipsize="end"
+                android:maxLines="6"
+                />
         </LinearLayout>
     </LinearLayout>
 
