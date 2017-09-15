@@ -115,6 +115,9 @@ public class AlbumActivity extends AppCompatActivity {
 
         ListViewAdapter listViewAdapter = new ListViewAdapter(list);
         mListView = (ListView)findViewById(R.id.album_listview);
+
+        View listViewHeader = getLayoutInflater().inflate(R.layout.album_listview_header,mListView,false);
+        mListView.addHeaderView(listViewHeader);
         mListView.setAdapter(listViewAdapter);
     }
 

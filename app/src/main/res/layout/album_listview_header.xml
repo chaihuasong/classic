@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/bk"/>
+    <TextView
+        android:id="@+id/album_listview_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="共120集"
+        android:textSize="16sp"
+        android:layout_marginLeft="36dp"
+        android:gravity="center_vertical"/>
+</LinearLayout>
