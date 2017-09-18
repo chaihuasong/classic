@@ -27,21 +27,29 @@
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/listening_irc"
+    <com.example.elvin.htzclassic.view.impl.LrcView
+        android:id="@+id/lrcView"
         android:padding="15dp"
         android:layout_width="match_parent"
-        android:layout_height="420dp"
+        android:layout_height="wrap_content"
         android:text="@string/listening_irc"
         android:layout_below="@+id/listening_toolbar"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:background="#000"
+        android:layout_above="@+id/play_bar" />
 
     <LinearLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@color/bk"
-        android:gravity="center">
+        android:gravity="center"
+        android:id="@+id/play_bar">
+        <ImageButton
+            android:id="@+id/listening_mode"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/loop_play"/>
         <ImageButton
             android:id="@+id/listening_pre"
             android:layout_width="30dp"
@@ -60,6 +68,11 @@
             android:layout_height="30dp"
             android:background="@drawable/next"
             android:layout_margin="20dp"/>
+        <ImageButton
+            android:id="@+id/listening_item_list"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/item_list"/>
     </LinearLayout>
 
 </RelativeLayout>

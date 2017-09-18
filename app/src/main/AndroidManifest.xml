@@ -24,7 +24,8 @@
         <activity
             android:name=".AlbumActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ListeningActivity" />
+        <activity android:name=".ListeningActivity"
+            android:parentActivityName=".MainActivity" />
 
         <service
             android:name=".PlayingMusicService"
