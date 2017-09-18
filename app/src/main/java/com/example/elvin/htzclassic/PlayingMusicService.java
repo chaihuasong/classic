@@ -27,6 +27,7 @@ public class PlayingMusicService extends Service {
     public void onCreate() {
         super.onCreate();
         timer = new Timer();
+        task = new LrcTask();
 
         if (null == mediaPlayer){
             mediaPlayer = new MediaPlayer();
@@ -62,14 +63,14 @@ public class PlayingMusicService extends Service {
     class LrcTask extends  TimerTask{
         @Override
         public void run() {
-            Log.d("dd","ddfsafas");
-//            if(mediaPlayer.isPlaying()){
-//                Intent intent = new Intent(ListeningActivity.SERVICE_PLAYING_ACTION);
-//                int position = mediaPlayer.getCurrentPosition();
-//                intent.putExtra("position",position);
-//                sendBroadcast(intent);
-//            }
-
+            try{
+                Intent intent = new Intent(ListeningActivity.SERVICE_PLAYING_ACTION);
+                int position = mediaPlayer.getCurrentPosition();
+                intent.putExtra("position",position);
+                sendBroadcast(intent);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -78,12 +79,16 @@ public class PlayingMusicService extends Service {
         switch (intent.getIntExtra("type",-1)){
             case ListeningActivity.PLAY:
                 if(isStop){
-                    mediaPlayer.reset();
-                    mediaPlayer = MediaPlayer.create(this,R.raw.music);
-                    mediaPlayer.start();
-                    Log.e(TAG,""+mediaPlayer.getCurrentPosition());
-                    mediaPlayer.setLooping(false);
-                    isStop = false;
+                    try{
+                        mediaPlayer.reset();
+                        mediaPlayer = MediaPlayer.create(this,R.raw.music);
+                        mediaPlayer.start();
+                        timer.schedule(task,0,10);
+                        mediaPlayer.setLooping(false);
+                        isStop = false;
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }else if(!isStop && mediaPlayer != null && !mediaPlayer.isPlaying() ){
                     mediaPlayer.start();
                 }
