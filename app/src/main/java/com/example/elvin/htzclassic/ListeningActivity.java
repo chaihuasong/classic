@@ -83,16 +83,13 @@ public class ListeningActivity extends AppCompatActivity {
         //一开始就开启service，进行播放
         mImageButtonPlay.setBackgroundResource(R.drawable.stop);
         playMusic(PLAY);
-
-        Intent intent = new Intent("org.htz.classic.elvindu.communication.ACTION");
-        intent.setPackage(getPackageName());
-        bindService(intent,conn,Context.BIND_AUTO_CREATE);
     }
 
     ServiceConnection conn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             playingMusicService = ((PlayingMusicService.localBinder)iBinder).getService();
+            Log.d(TAG,""+playingMusicService.mediaPlayer.getDuration());
             seekBar.setMax(playingMusicService.mediaPlayer.getDuration());
         }
 
@@ -121,6 +118,10 @@ public class ListeningActivity extends AppCompatActivity {
         }else {
             mImageButtonPlay.setBackgroundResource(R.drawable.play);
         }
+
+        Intent intent = new Intent("org.htz.classic.elvindu.communication.ACTION");
+        intent.setPackage(getPackageName());
+        bindService(intent,conn,Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -128,6 +129,7 @@ public class ListeningActivity extends AppCompatActivity {
         super.onStop();
         unregisterReceiver(msgReceiver);
         unregisterReceiver(completionReceiver);
+        unbindService(conn);
     }
 
     private  void playMusic(int type){
@@ -165,6 +167,7 @@ public class ListeningActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                Log.d(TAG,""+seekBar.getProgress());
                 mLrcView.seekLrcToTime(seekBar.getProgress());
             }
         });
