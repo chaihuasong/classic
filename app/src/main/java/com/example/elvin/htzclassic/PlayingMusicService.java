@@ -1,6 +1,7 @@
 package com.example.elvin.htzclassic;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ProviderInfo;
 import android.media.AudioRecord;
@@ -23,6 +24,11 @@ public class PlayingMusicService extends Service {
     private Timer timer;
     private LrcTask task;
 
+    public static  int PLAYER_STATE_PLAYING =1;
+    public static  int PLAYER_STATE_PAUSE =2;
+    public static  int PLAYER_STATE_STOP =3 ;
+    public static  int PLAYER_STATE = PLAYER_STATE_STOP;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -30,23 +36,16 @@ public class PlayingMusicService extends Service {
         task = new LrcTask();
 
         if (null == mediaPlayer){
-            mediaPlayer = new MediaPlayer();
+            mediaPlayer = MediaPlayer.create(this,R.raw.music);
 
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
                 @Override
                 public void onCompletion(MediaPlayer mp){
+                    Log.d(TAG,"onCompletion");
                     Intent intent = new Intent();
-                    intent.setAction("com.complete");
+                    intent.setAction(ListeningActivity.SERVICE_PLAYING_COMPLETION_ACTION);
                     sendBroadcast(intent);
-                }
-            });
-
-            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mediaPlayer) {
-                    Log.d("dd","dd");
-//                    mediaPlayer.start();
-                    timer.schedule(task,0,10000);
+                    PLAYER_STATE = PLAYER_STATE_STOP;
                 }
             });
 
@@ -78,12 +77,11 @@ public class PlayingMusicService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         switch (intent.getIntExtra("type",-1)){
             case ListeningActivity.PLAY:
+                PLAYER_STATE = PLAYER_STATE_PLAYING;
                 if(isStop){
                     try{
-                        mediaPlayer.reset();
-                        mediaPlayer = MediaPlayer.create(this,R.raw.music);
                         mediaPlayer.start();
-                        timer.schedule(task,0,10);
+                        timer.schedule(task,0,100);
                         mediaPlayer.setLooping(false);
                         isStop = false;
                     }catch (Exception e){
@@ -94,16 +92,23 @@ public class PlayingMusicService extends Service {
                 }
                 break;
             case ListeningActivity.PAUSE:
+                PLAYER_STATE = PLAYER_STATE_PAUSE;
                 if (mediaPlayer != null && mediaPlayer.isPlaying()){
                     mediaPlayer.pause();
                 }
                 break;
             case ListeningActivity.STOP:
+                PLAYER_STATE = PLAYER_STATE_STOP;
                 if (mediaPlayer != null && mediaPlayer.isPlaying()){
                     mediaPlayer.stop();
                     isStop = true;
                 }
                 break;
+            case ListeningActivity.SEEK:
+                long position = intent.getLongExtra("position",0);
+                if (mediaPlayer != null){
+                    mediaPlayer.seekTo((int) position);
+                }
         }
 
         return  START_NOT_STICKY;

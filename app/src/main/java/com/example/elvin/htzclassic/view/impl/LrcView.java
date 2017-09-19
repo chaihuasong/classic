@@ -450,7 +450,6 @@ public class LrcView extends View implements ILrcView {
         if (mDisplayMode != DISPLAY_MODE_NORMAL) {
             return;
         }
-        Log.d(TAG, "seekLrcToTime:" + time);
 
         for (int i = 0; i < mLrcRows.size(); i++) {
             LrcRow current = mLrcRows.get(i);

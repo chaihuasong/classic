@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
     private List<Fragment> mlist;
-    private Boolean isPlaying = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,14 +79,28 @@ public class MainActivity extends AppCompatActivity {
         imageButtonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isPlaying){
+                if (PlayingMusicService.PLAYER_STATE == PlayingMusicService.PLAYER_STATE_PLAYING){
                     imageButtonPlay.setImageResource(R.drawable.play);
-                    isPlaying = !isPlaying;
+                    Intent intent = new Intent(MainActivity.this,PlayingMusicService.class);
+                    intent.putExtra("type",ListeningActivity.PAUSE);
+                    startService(intent);
                 }else {
                     imageButtonPlay.setImageResource(R.drawable.stop);
-                    isPlaying = !isPlaying;
+                    Intent intent = new Intent(MainActivity.this,PlayingMusicService.class);
+                    intent.putExtra("type",ListeningActivity.PLAY);
+                    startService(intent);
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(PlayingMusicService.PLAYER_STATE == PlayingMusicService.PLAYER_STATE_PLAYING){
+            imageButtonPlay.setImageResource(R.drawable.stop);
+        }else {
+            imageButtonPlay.setImageResource(R.drawable.play);
+        }
     }
 }
