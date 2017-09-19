@@ -18,7 +18,7 @@ import java.util.TimerTask;
 
 public class PlayingMusicService extends Service {
     private  final  static  String TAG = "PlayingMusicService";
-    private MediaPlayer mediaPlayer;
+    public MediaPlayer mediaPlayer;
     private Boolean isStop = true;
 
     private Timer timer;
@@ -119,7 +119,12 @@ public class PlayingMusicService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        return  null;
+        return  new localBinder();
+    }
+
+    public class localBinder extends Binder{
+        PlayingMusicService getService(){
+            return PlayingMusicService.this;
+        }
     }
 }

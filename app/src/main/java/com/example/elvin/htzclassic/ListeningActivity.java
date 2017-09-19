@@ -43,6 +43,7 @@ public class ListeningActivity extends AppCompatActivity {
     private MsgReceiver msgReceiver;
     private CompletionReceiver completionReceiver;
     private SeekBar seekBar;
+    private PlayingMusicService playingMusicService;
 
     public final  static String   SERVICE_PLAYING_ACTION = "com.example.elvin.htzclassic.service.playing";
     public final  static String   SERVICE_PLAYING_COMPLETION_ACTION = "com.example.elvin.htzclassic.service.playing.COMPLETION";
@@ -78,7 +79,28 @@ public class ListeningActivity extends AppCompatActivity {
                 startService(intent);
             }
         });
+
+        //一开始就开启service，进行播放
+        mImageButtonPlay.setBackgroundResource(R.drawable.stop);
+        playMusic(PLAY);
+
+        Intent intent = new Intent("org.htz.classic.elvindu.communication.ACTION");
+        intent.setPackage(getPackageName());
+        bindService(intent,conn,Context.BIND_AUTO_CREATE);
     }
+
+    ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            playingMusicService = ((PlayingMusicService.localBinder)iBinder).getService();
+            seekBar.setMax(playingMusicService.mediaPlayer.getDuration());
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
 
     @Override
     protected void onStart() {
@@ -169,19 +191,19 @@ public class ListeningActivity extends AppCompatActivity {
         return  "";
     }
 
-   public class  MsgReceiver extends BroadcastReceiver{
-       @Override
-       public void onReceive(Context context, Intent intent) {
-           int position = intent.getIntExtra("position",0);
-           mLrcView.seekLrcToTime(position);
-       }
-   }
+    public class  MsgReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int position = intent.getIntExtra("position",0);
+            mLrcView.seekLrcToTime(position);
+        }
+    }
 
-   public  class  CompletionReceiver extends  BroadcastReceiver{
-       @Override
-       public void onReceive(Context context, Intent intent) {
-           Log.d(TAG,"CompletionReceiver:onReceive");
-           mImageButtonPlay.setBackgroundResource(R.drawable.play);
-       }
-   }
+    public  class  CompletionReceiver extends  BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG,"CompletionReceiver:onReceive");
+            mImageButtonPlay.setBackgroundResource(R.drawable.play);
+        }
+    }
 }
