@@ -27,7 +27,7 @@
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
-    <com.example.elvin.htzclassic.view.impl.LrcView
+    <com.example.elvin.htzclassic.lrcview.impl.LrcView
         android:id="@+id/lrcView"
         android:padding="15dp"
         android:layout_width="match_parent"
@@ -36,7 +36,14 @@
         android:layout_below="@+id/listening_toolbar"
         android:textSize="16sp"
         android:background="#000"
-        android:layout_above="@+id/play_bar" />
+        android:layout_above="@+id/listening_seekbar" />
+
+    <SeekBar
+        android:id="@+id/listening_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_above="@+id/play_bar"
+        android:background="@color/bk"/>
 
     <LinearLayout
         android:layout_alignParentBottom="true"

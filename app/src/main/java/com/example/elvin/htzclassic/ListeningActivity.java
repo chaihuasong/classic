@@ -14,13 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 
-import com.example.elvin.htzclassic.view.ILrcBuilder;
-import com.example.elvin.htzclassic.view.ILrcView;
-import com.example.elvin.htzclassic.view.ILrcViewListener;
-import com.example.elvin.htzclassic.view.impl.DefaultLrcBuilder;
-import com.example.elvin.htzclassic.view.impl.LrcRow;
-import com.example.elvin.htzclassic.view.impl.LrcView;
+import com.example.elvin.htzclassic.lrcview.ILrcBuilder;
+import com.example.elvin.htzclassic.lrcview.ILrcView;
+import com.example.elvin.htzclassic.lrcview.ILrcViewListener;
+import com.example.elvin.htzclassic.lrcview.impl.DefaultLrcBuilder;
+import com.example.elvin.htzclassic.lrcview.impl.LrcRow;
+import com.example.elvin.htzclassic.lrcview.impl.LrcView;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -41,6 +42,7 @@ public class ListeningActivity extends AppCompatActivity {
     private ILrcView mLrcView;
     private MsgReceiver msgReceiver;
     private CompletionReceiver completionReceiver;
+    private SeekBar seekBar;
 
     public final  static String   SERVICE_PLAYING_ACTION = "com.example.elvin.htzclassic.service.playing";
     public final  static String   SERVICE_PLAYING_COMPLETION_ACTION = "com.example.elvin.htzclassic.service.playing.COMPLETION";
@@ -124,6 +126,24 @@ public class ListeningActivity extends AppCompatActivity {
                     mImageButtonPlay.setBackgroundResource(R.drawable.stop);
                     playMusic(PLAY);
                 }
+            }
+        });
+
+        seekBar = (SeekBar)findViewById(R.id.listening_seekbar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mLrcView.seekLrcToTime(seekBar.getProgress());
             }
         });
     }
