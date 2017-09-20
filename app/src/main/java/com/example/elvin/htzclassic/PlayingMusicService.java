@@ -1,11 +1,15 @@
 package com.example.elvin.htzclassic;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ProviderInfo;
+import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.MediaPlayer;
+import android.nfc.Tag;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.IntDef;
@@ -28,6 +32,7 @@ public class PlayingMusicService extends Service {
     public static  int PLAYER_STATE_PAUSE =2;
     public static  int PLAYER_STATE_STOP =3 ;
     public static  int PLAYER_STATE = PLAYER_STATE_STOP;
+    private HeadsetDetectReceiver headsetDetectReceiver;
 
     @Override
     public void onCreate() {
@@ -57,6 +62,18 @@ public class PlayingMusicService extends Service {
                 }
             });
         }
+
+        headsetDetectReceiver = new HeadsetDetectReceiver();
+        IntentFilter intentFilter3 = new IntentFilter();
+        intentFilter3.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+        intentFilter3.addAction(Intent.ACTION_HEADSET_PLUG);
+        registerReceiver(headsetDetectReceiver,intentFilter3);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(headsetDetectReceiver);
     }
 
     class LrcTask extends  TimerTask{
@@ -125,6 +142,28 @@ public class PlayingMusicService extends Service {
     public class localBinder extends Binder{
         PlayingMusicService getService(){
             return PlayingMusicService.this;
+        }
+    }
+
+    public  class  HeadsetDetectReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG,"HeadsetDetectReceiver:onReceive:action:"+intent.getAction());
+//            if(intent.getAction().equals(AudioManager.ACTION_AUDIO_BECOMING_NOISY)){
+            if(intent.getAction().equals(AudioManager.ACTION_AUDIO_BECOMING_NOISY) || intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)){
+                if(intent.hasExtra("state")){
+                    int state = intent.getIntExtra("state",0);
+                    Log.d(TAG,"HeadsetDetectReceiver:onReceive:state:"+state);
+                    if(1==state){
+
+                    }else if(0==state){//拔出耳机
+                        PLAYER_STATE = PLAYER_STATE_PAUSE;
+                        if (mediaPlayer != null && mediaPlayer.isPlaying()){
+                            mediaPlayer.pause();
+                        }
+                    }
+                }
+            }
         }
     }
 }

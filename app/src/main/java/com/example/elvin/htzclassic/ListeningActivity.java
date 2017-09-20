@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.media.AudioManager;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ public class ListeningActivity extends AppCompatActivity {
     private ILrcView mLrcView;
     private MsgReceiver msgReceiver;
     private CompletionReceiver completionReceiver;
+//    private HeadsetDetectReceiver headsetDetectReceiver;
     private SeekBar seekBar;
     private PlayingMusicService playingMusicService;
 
@@ -113,6 +115,11 @@ public class ListeningActivity extends AppCompatActivity {
         intentFilter2.addAction(SERVICE_PLAYING_COMPLETION_ACTION);
         registerReceiver(completionReceiver,intentFilter2);
 
+//        headsetDetectReceiver = new HeadsetDetectReceiver();
+//        IntentFilter intentFilter3 = new IntentFilter();
+//        intentFilter3.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+//        registerReceiver(headsetDetectReceiver,intentFilter3);
+
         Intent intent = new Intent(ListeningActivity.this,PlayingMusicService.class);
         intent.setPackage(getPackageName());
         bindService(intent,conn,Context.BIND_AUTO_CREATE);
@@ -124,6 +131,7 @@ public class ListeningActivity extends AppCompatActivity {
         unregisterReceiver(msgReceiver);
         unregisterReceiver(completionReceiver);
         unbindService(conn);
+//        unregisterReceiver(headsetDetectReceiver);
     }
 
     private  void playMusic(int type){
