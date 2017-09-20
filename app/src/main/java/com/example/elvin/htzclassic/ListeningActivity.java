@@ -89,7 +89,7 @@ public class ListeningActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             playingMusicService = ((PlayingMusicService.localBinder)iBinder).getService();
-            Log.d(TAG,""+playingMusicService.mediaPlayer.getDuration());
+            Log.d(TAG,"onServiceConnected media length:"+playingMusicService.mediaPlayer.getDuration());
             seekBar.setMax(playingMusicService.mediaPlayer.getDuration());
         }
 
@@ -113,13 +113,7 @@ public class ListeningActivity extends AppCompatActivity {
         intentFilter2.addAction(SERVICE_PLAYING_COMPLETION_ACTION);
         registerReceiver(completionReceiver,intentFilter2);
 
-        if(PlayingMusicService.PLAYER_STATE == PlayingMusicService.PLAYER_STATE_PLAYING){
-            mImageButtonPlay.setBackgroundResource(R.drawable.stop);
-        }else {
-            mImageButtonPlay.setBackgroundResource(R.drawable.play);
-        }
-
-        Intent intent = new Intent("org.htz.classic.elvindu.communication.ACTION");
+        Intent intent = new Intent(ListeningActivity.this,PlayingMusicService.class);
         intent.setPackage(getPackageName());
         bindService(intent,conn,Context.BIND_AUTO_CREATE);
     }
@@ -167,8 +161,12 @@ public class ListeningActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Log.d(TAG,""+seekBar.getProgress());
-                mLrcView.seekLrcToTime(seekBar.getProgress());
+                Log.d(TAG,"onStopTrackingTouch seek to:"+seekBar.getProgress());
+                long position = seekBar.getProgress();
+                Intent intent = new Intent(ListeningActivity.this,PlayingMusicService.class);
+                intent.putExtra("type",SEEK);
+                intent.putExtra("position",position);
+                startService(intent);
             }
         });
     }
@@ -199,6 +197,7 @@ public class ListeningActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             int position = intent.getIntExtra("position",0);
             mLrcView.seekLrcToTime(position);
+            seekBar.setProgress(position);
         }
     }
 
