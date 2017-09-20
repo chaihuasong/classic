@@ -17,6 +17,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.io.PushbackInputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,6 +33,7 @@ public class PlayingMusicService extends Service {
     public static  int PLAYER_STATE_PAUSE =2;
     public static  int PLAYER_STATE_STOP =3 ;
     public static  int PLAYER_STATE = PLAYER_STATE_STOP;
+    public  static String SERVICE_PLAYING_PAUSE_ACTION = "service.playing.pause.ACTION";
     private HeadsetDetectReceiver headsetDetectReceiver;
 
     @Override
@@ -160,6 +162,9 @@ public class PlayingMusicService extends Service {
                         PLAYER_STATE = PLAYER_STATE_PAUSE;
                         if (mediaPlayer != null && mediaPlayer.isPlaying()){
                             mediaPlayer.pause();
+                            Intent i = new Intent();
+                            i.setAction(SERVICE_PLAYING_PAUSE_ACTION);
+                            sendBroadcast(i);
                         }
                     }
                 }

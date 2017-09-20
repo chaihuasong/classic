@@ -2,9 +2,11 @@ package com.example.elvin.htzclassic;
 
 import android.app.SearchManager;
 import android.app.SearchableInfo;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
 
     private List<Fragment> mlist;
+    private MyReceiver myReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +104,26 @@ public class MainActivity extends AppCompatActivity {
             imageButtonPlay.setImageResource(R.drawable.stop);
         }else {
             imageButtonPlay.setImageResource(R.drawable.play);
+        }
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(PlayingMusicService.SERVICE_PLAYING_PAUSE_ACTION);
+        myReceiver= new MyReceiver();
+        registerReceiver(myReceiver,intentFilter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(myReceiver);
+    }
+
+    public class MyReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(PlayingMusicService.SERVICE_PLAYING_PAUSE_ACTION.equals(intent.getAction())){
+                imageButtonPlay.setImageResource(R.drawable.play);
+            }
         }
     }
 }

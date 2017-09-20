@@ -108,17 +108,13 @@ public class ListeningActivity extends AppCompatActivity {
         msgReceiver = new MsgReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(SERVICE_PLAYING_ACTION);
+        intentFilter.addAction(PlayingMusicService.SERVICE_PLAYING_PAUSE_ACTION);
         registerReceiver(msgReceiver,intentFilter);
 
         completionReceiver = new CompletionReceiver();
         IntentFilter intentFilter2 = new IntentFilter();
         intentFilter2.addAction(SERVICE_PLAYING_COMPLETION_ACTION);
         registerReceiver(completionReceiver,intentFilter2);
-
-//        headsetDetectReceiver = new HeadsetDetectReceiver();
-//        IntentFilter intentFilter3 = new IntentFilter();
-//        intentFilter3.addAction(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
-//        registerReceiver(headsetDetectReceiver,intentFilter3);
 
         Intent intent = new Intent(ListeningActivity.this,PlayingMusicService.class);
         intent.setPackage(getPackageName());
@@ -203,9 +199,18 @@ public class ListeningActivity extends AppCompatActivity {
     public class  MsgReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
-            int position = intent.getIntExtra("position",0);
-            mLrcView.seekLrcToTime(position);
-            seekBar.setProgress(position);
+            try{
+                if(PlayingMusicService.SERVICE_PLAYING_PAUSE_ACTION.equals(intent.getAction())){
+                    mImageButtonPlay.setBackgroundResource(R.drawable.play);
+                }else {
+                    int position = intent.getIntExtra("position",0);
+                    mLrcView.seekLrcToTime(position);
+                    seekBar.setProgress(position);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
     }
 
