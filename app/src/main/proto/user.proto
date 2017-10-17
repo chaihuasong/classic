@@ -14,25 +14,40 @@
 // limitations under the License.
 syntax = "proto3";
 
+package apipb;
+
 option java_multiple_files = true;
-option java_package = "io.grpc.htzclassic.helloworld";
+option java_package = "io.grpc.htzclassic.user";
 option java_outer_classname = "HelloWorldProto";
-option objc_class_prefix = "HLW";
+option go_package = "apipb";
 
-package helloworld;
 
-// The greeting service definition.
-service Greeter {
-  // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
+service user{
+  rpc AddHistory(AddHistoryReq)returns (AddHistoryRes){}
+  rpc Histories(HistoriesReq)returns (HistoriesRes){}
 }
 
-// The request message containing the user's name.
-message HelloRequest {
-  string name = 1;
+message AddHistoryReq{
+  string SutraId = 1;
+  string SutraName = 2;
+  string SutraCover = 3;
+  string SutraItemId = 4;
+  string SutraItemTitle = 5;
+  int64 LastPosition =6;
+}
+message AddHistoryRes{
 }
 
-// The response message containing the greetings
-message HelloReply {
-  string message = 1;
+message HistoriesReq{
+}
+message HistoriesResponse{
+  string SutraId = 1;
+  string SutraName = 2;
+  string SutraCover = 3;
+  string SutraItemId = 4;
+  string SutraItemTitle = 5;
+  int64 LastPosition =6;
+}
+message HistoriesRes{
+  repeated HistoriesResponse Items = 1;
 }

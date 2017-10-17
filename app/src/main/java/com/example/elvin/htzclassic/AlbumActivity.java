@@ -15,8 +15,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.grpc.okhttp.OkHttpChannelBuilder;
 
-//TODO 有过一个bug,listview多刷新一下就会乱
+
+//TODO 有一个bug,listview多刷新一下就会乱
 public class AlbumActivity extends AppCompatActivity {
     public final  static String albumImage = "album_image";
     public final  static String albumTitle = "album_title";
