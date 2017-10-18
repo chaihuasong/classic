@@ -1,0 +1,24 @@
+syntax="proto3";
+
+package apipb;
+
+option java_multiple_files = true;
+option java_package = "io.grpc.htz.classic.notification";
+option java_outer_classname = "Notification";
+option go_package = "apipb";
+
+service notification{
+	rpc GetNotifications(GetNotificationsReq)returns (GetNotificationsRes){}
+}
+
+message GetNotificationsReq{
+}
+message GetNotificationsResponse{
+	string UserId = 1;
+	string Title = 2;
+	string Msg = 3;
+	string CreatedAt = 4;
+}
+message GetNotificationsRes{
+	repeated GetNotificationsResponse items = 1;
+}

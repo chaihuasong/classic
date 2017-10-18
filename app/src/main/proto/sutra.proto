@@ -1,0 +1,73 @@
+syntax="proto3";
+
+package apipb;
+
+option java_multiple_files = true;
+option java_package = "io.grpc.htz.classic.sutra";
+option java_outer_classname = "Sutra";
+option go_package = "apipb";
+
+service sutra{
+	rpc Recommendations(RecommendationsReq)returns (RecommendationsRes){}
+	rpc SutraItmes(SutraItmesReq)returns (SutraItmesRes){}
+	rpc SutraInfo(SutraInfoReq)returns (SutraInfoRes){}
+	rpc ListAllSutras(ListAllSutrasReq)returns (ListAllSutrasRes){}
+}
+
+message RecommendationsReq{
+}
+message RecommendationsResponse{
+	string SutraId = 1;
+	string SutraName = 2;
+	string SutraDesc = 3;
+	string SutraCover = 4;
+	uint64 Sort =5;
+}
+message RecommendationsRes{
+	repeated RecommendationsResponse Recommendations = 1;
+}
+
+message SutraItmesReq{
+	string SutraId = 1;
+	uint64 Num = 2;
+	uint64 Page= 3;
+}
+message SutraItmesResponse{
+	string Id = 1;
+	string SutraId = 2;
+	string Title = 3;
+	string Description = 4;
+	string Original = 5;
+	string AudioId = 6;
+	string LyricId = 7;
+	uint64 Sort = 8;
+	uint64 PlayedCount = 9;
+	uint64 Duration = 10;
+	string CreatedAt = 11;
+}
+message SutraItmesRes{
+	repeated SutraItmesResponse Items = 1;
+	uint64 Total = 2;
+	uint64 CurPage= 3; //当前是第几页
+	uint64 CurNum = 4; //返回的数量
+}
+
+message SutraInfoReq{
+	string Id = 1;
+}
+message SutraInfoRes{
+	string Id  = 1;
+	string Name = 2;
+	string Cover = 3;
+	string Description = 4;
+	uint64 PlayedCount = 5;
+	uint64 ItemTotal = 6;
+	string CreatedAt = 7;
+}
+
+message ListAllSutrasReq{
+}
+message ListAllSutrasRes{
+	repeated SutraInfoRes Sutras = 1;
+}
+

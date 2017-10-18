@@ -1,0 +1,8 @@
+syntax="proto3";
+
+package apipb;
+
+option java_multiple_files = true;
+option java_package = "io.grpc.htz.classic.donation";
+option java_outer_classname = "Donation";
+option go_package = "apipb";

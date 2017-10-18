@@ -17,8 +17,8 @@ syntax = "proto3";
 package apipb;
 
 option java_multiple_files = true;
-option java_package = "io.grpc.htzclassic.user";
-option java_outer_classname = "HelloWorldProto";
+option java_package = "io.grpc.htz.classic.user";
+option java_outer_classname = "User";
 option go_package = "apipb";
 
 
