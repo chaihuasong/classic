@@ -11,6 +11,8 @@ import io.grpc.htzclassic.user.HistoriesRes;
 import io.grpc.htzclassic.user.userGrpc;
 import io.grpc.okhttp.OkHttpChannelBuilder;
 import io.grpc.stub.MetadataUtils;
+import io.grpc.StatusRuntimeException;
+
 
 /**
  * Created by elvin on 17-10-17.
@@ -20,7 +22,7 @@ public class GrpcTask extends AsyncTask {
     private  static String  TAG = "GrpcTask";
     ManagedChannel managedChannel;
     @Override
-    protected Object doInBackground(Object[] objects) {
+    protected String doInBackground(Object[] objects) {
         try {
             managedChannel = OkHttpChannelBuilder.forAddress("10.0.0.39",7001).usePlaintext(true).build();
 
@@ -35,9 +37,11 @@ public class GrpcTask extends AsyncTask {
             HistoriesReq historiesReq = HistoriesReq.newBuilder().build();
             HistoriesRes historiesRes = stub.histories(historiesReq);
             Log.d(TAG,historiesRes.toString());
-            return historiesRes;
-        }catch (Exception e){
-            e.printStackTrace();
+            return historiesRes.toString();
+        }catch (StatusRuntimeException e){
+            Log.d(TAG,e.getMessage());
+            Log.d(TAG,e.getStatus().toString());
+            Log.d(TAG,e.getStatus().getDescription());
         }
         return null;
     }
