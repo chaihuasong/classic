@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HTZClassic.iml" filepath="$PROJECT_DIR$/HTZClassic.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/htz_classic.iml" filepath="$PROJECT_DIR$/htz_classic.iml" />
     </modules>
   </component>
 </project>

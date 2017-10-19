@@ -1,0 +1,31 @@
+syntax="proto3";
+
+package storagepb;
+
+option go_package = "storagepb";
+option java_multiple_files = true;
+option java_package = "io.grpc.htz.classic.storage";
+option java_outer_classname = "Storage";
+
+
+message DownloadFileReq{
+	string FileId = 1;
+}
+message DownloadFileRes{
+	bytes Content = 1;
+	uint64 Length = 2; //文件大小，单位：byte
+}
+
+message UploadFileReq{
+	bytes Content = 1;
+	uint64 Length = 2; //文件大小，单位：byte
+	string Mime = 3; //文件类型
+}
+message UploadFileRes{
+	string FileId = 1;
+}
+
+service storage{
+	rpc DownloadFile(DownloadFileReq)returns (stream DownloadFileRes){}
+	rpc UploadFile(stream UploadFileReq)returns (UploadFileRes){}
+}

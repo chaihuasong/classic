@@ -3,7 +3,9 @@ package com.example.elvin.htzclassic;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -25,6 +27,8 @@ import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.StaticPagerAdapter;
 import com.jude.rollviewpager.hintview.ColorPointHintView;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -224,16 +228,55 @@ public class HomeFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+    class ImageTask extends AsyncTask<String,Integer,Drawable>{
+        ImageView imageView;
+
+        ImageTask(ImageView imageView){
+            this.imageView = imageView;
+        }
+
+        @Override
+        protected Drawable doInBackground(String... strings) {
+            try {
+                URL url = new URL(strings[0]);
+                Drawable drawable = Drawable.createFromStream(url.openStream(),"src");
+                return  drawable;
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Drawable drawable) {
+            super.onPostExecute(drawable);
+            imageView.setImageDrawable(drawable);
+        }
+    }
+
     private  class rollPagerViewAdapter extends StaticPagerAdapter {
         private int[] imgs = new int[]{
                 R.drawable.banner_zhu_zi_wan_nian_ding_lun,
                 R.drawable.banner_dian_zi_bao,
         };
 
+        String[] urls = {"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1508998833&di=449b89b6d459b976402ddbcd115525d6&imgtype=jpg&er=1&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201509%2F16%2F20150916173323_FUN2E.jpeg"
+        ,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1508393156265&di=31b9b7edfc3820e8789e30608abbaed4&imgtype=0&src=http%3A%2F%2Fc.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Ff31fbe096b63f6240100df6e8d44ebf81a4ca37a.jpg"};
+
         @Override
         public View getView(ViewGroup container, int position) {
             ImageView view = new ImageView(container.getContext());
-            view.setImageResource(imgs[position]);
+//            view.setImageResource(imgs[position]);
+//            try {
+//                URL url = new URL("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1508393156265&di=31b9b7edfc3820e8789e30608abbaed4&imgtype=0&src=http%3A%2F%2Fc.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Ff31fbe096b63f6240100df6e8d44ebf81a4ca37a.jpg");
+//                Drawable drawable = Drawable.createFromStream(url.openStream(),"src");
+//                view.setImageDrawable(drawable);
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+            ImageTask imageTask = new  ImageTask(view);
+            imageTask.execute(urls[position]);
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             return view;

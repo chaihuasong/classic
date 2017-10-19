@@ -1,0 +1,65 @@
+syntax="proto3";
+
+package searchpb;
+
+option go_package = "searchpb";
+option java_multiple_files = true;
+option java_package = "io.grpc.htz.classic.search";
+option java_outer_classname = "HTZSearch";
+
+
+service Search{
+	rpc Query(QueryReq)returns (QueryRes){}
+	rpc Update(UpdateReq)returns (UpdateRes){}
+	rpc Delete(DeleteReq)returns (DeleteRes){}
+	rpc Insert(InsertReq)returns (InsertRes){}
+}
+
+message CommonData{
+	string SutraItemId = 1;
+	string Interpretation = 2;
+	string Title = 3;
+	string Description = 4;
+	string Original = 5;
+	string SutraName = 6;
+	string SutraId=7;
+}
+
+message ArrayOfString{
+	repeated string Value = 1;
+}
+
+message QueryReq{
+	string Key =1;
+	uint64 Page =2;
+	uint64 Num  = 3;
+}
+message QueryResponse{
+	string SutraItemId = 1;
+	map<string,ArrayOfString> Fragments = 2;//key：插入时数据结构的字段名，例如：title,description,original
+}
+message QueryRes{
+	repeated QueryResponse Items = 1;
+	uint64 Total = 2;
+	uint64 CurPage= 3; //当前是第几页
+	uint64 PageNum = 4; //返回的数量
+}
+
+message UpdateReq{
+	CommonData Common = 1;
+}
+message UpdateRes{
+}
+
+message DeleteReq{
+	string SutraItemId = 1;//文档ID
+}
+message DeleteRes{
+}
+
+message InsertReq{
+	CommonData Common = 1;
+}
+message InsertRes{
+}
+
